@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+enum pb_revision_t
+{
+    PB_REV_NONE = 0;
+    PB_REV1_0 = 1;
+    PB_REV1_1 = 2;
+    PB_REV1_2 = 3;
+    PB_REV2_0 = 4;
+    PB_REV2_1 = 5;
+}
+
+message pb_input_t
+{
+    bool state = 1;
+    string name = 2;
+}
+
+message pb_voltage_t
+{
+    int32 battery = 1;
+    int32 external = 2;
+}
+
+message pb_message_t
+{
+    uint32 luminance = 1;
+    pb_revision_t hw_revision = 2;
+    repeated pb_input_t inputs = 3;
+    pb_voltage_t voltage = 4;
+}
