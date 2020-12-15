@@ -30,13 +30,13 @@ typedef struct _pb_voltage_t {
     int32_t external;
 } pb_voltage_t;
 
-typedef struct _pb_message_t {
+typedef struct _pb_packet_t {
     uint32_t luminance;
     pb_revision_t hw_revision;
     pb_callback_t inputs;
     bool has_voltage;
     pb_voltage_t voltage;
-} pb_message_t;
+} pb_packet_t;
 
 
 /* Helper constants for enums */
@@ -52,20 +52,20 @@ extern "C" {
 /* Initializer values for message structs */
 #define pb_input_t_init_default                  {0, {{NULL}, NULL}}
 #define pb_voltage_t_init_default                {0, 0}
-#define pb_message_t_init_default                {0, _pb_revision_t_MIN, {{NULL}, NULL}, false, pb_voltage_t_init_default}
+#define pb_packet_t_init_default                 {0, _pb_revision_t_MIN, {{NULL}, NULL}, false, pb_voltage_t_init_default}
 #define pb_input_t_init_zero                     {0, {{NULL}, NULL}}
 #define pb_voltage_t_init_zero                   {0, 0}
-#define pb_message_t_init_zero                   {0, _pb_revision_t_MIN, {{NULL}, NULL}, false, pb_voltage_t_init_zero}
+#define pb_packet_t_init_zero                    {0, _pb_revision_t_MIN, {{NULL}, NULL}, false, pb_voltage_t_init_zero}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define pb_input_t_state_tag                     1
 #define pb_input_t_name_tag                      2
 #define pb_voltage_t_battery_tag                 1
 #define pb_voltage_t_external_tag                2
-#define pb_message_t_luminance_tag               1
-#define pb_message_t_hw_revision_tag             2
-#define pb_message_t_inputs_tag                  3
-#define pb_message_t_voltage_tag                 4
+#define pb_packet_t_luminance_tag                1
+#define pb_packet_t_hw_revision_tag              2
+#define pb_packet_t_inputs_tag                   3
+#define pb_packet_t_voltage_tag                  4
 
 /* Struct field encoding specification for nanopb */
 #define pb_input_t_FIELDLIST(X, a) \
@@ -80,29 +80,29 @@ X(a, STATIC,   SINGULAR, INT32,    external,          2)
 #define pb_voltage_t_CALLBACK NULL
 #define pb_voltage_t_DEFAULT NULL
 
-#define pb_message_t_FIELDLIST(X, a) \
+#define pb_packet_t_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   luminance,         1) \
 X(a, STATIC,   SINGULAR, UENUM,    hw_revision,       2) \
 X(a, CALLBACK, REPEATED, MESSAGE,  inputs,            3) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  voltage,           4)
-#define pb_message_t_CALLBACK pb_default_field_callback
-#define pb_message_t_DEFAULT NULL
-#define pb_message_t_inputs_MSGTYPE pb_input_t
-#define pb_message_t_voltage_MSGTYPE pb_voltage_t
+#define pb_packet_t_CALLBACK pb_default_field_callback
+#define pb_packet_t_DEFAULT NULL
+#define pb_packet_t_inputs_MSGTYPE pb_input_t
+#define pb_packet_t_voltage_MSGTYPE pb_voltage_t
 
 extern const pb_msgdesc_t pb_input_t_msg;
 extern const pb_msgdesc_t pb_voltage_t_msg;
-extern const pb_msgdesc_t pb_message_t_msg;
+extern const pb_msgdesc_t pb_packet_t_msg;
 
 /* Defines for backwards compatibility with code written before nanopb-0.4.0 */
 #define pb_input_t_fields &pb_input_t_msg
 #define pb_voltage_t_fields &pb_voltage_t_msg
-#define pb_message_t_fields &pb_message_t_msg
+#define pb_packet_t_fields &pb_packet_t_msg
 
 /* Maximum encoded size of messages (where known) */
 /* pb_input_t_size depends on runtime parameters */
 #define pb_voltage_t_size                        22
-/* pb_message_t_size depends on runtime parameters */
+/* pb_packet_t_size depends on runtime parameters */
 
 #ifdef __cplusplus
 } /* extern "C" */

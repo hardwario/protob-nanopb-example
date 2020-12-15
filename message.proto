@@ -22,7 +22,7 @@ message pb_voltage_t
     int32 external = 2;
 }
 
-message pb_message_t
+message pb_packet_t
 {
     uint32 luminance = 1;
     pb_revision_t hw_revision = 2;

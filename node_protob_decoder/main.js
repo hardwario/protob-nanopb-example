@@ -9,13 +9,13 @@ protobuf.load("../message.proto")
 protobuf.load("../message.proto", function(err, root) {
     if (err)
         throw err;
- 
+
     // Obtain a message type
-    var myMessage = root.lookup("pb_message_t");
- 
+    var myMessage = root.lookup("pb_packet_t");
+
     b = Buffer.from('086410031A090801120548656C6C6F1A090801120548656C6C6F1A090801120548656C6C6F220608F60410CE09', 'hex');
     console.log(b);
- 
+
     // Decode an Uint8Array (browser) or Buffer (node) to a message
     var message = myMessage.decode(b);
     // ... do something with message

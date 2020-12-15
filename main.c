@@ -36,7 +36,7 @@ bool pb_callback_inputs(pb_ostream_t *stream, const pb_field_t *field, void * co
 
         msg_input.state = true;
         msg_input.name.funcs.encode = pb_callback_string;
-         
+
          if(pb_encode_tag_for_field(stream, field) == false || pb_encode_submessage(stream, pb_input_t_fields, &msg_input) == false)
          {
              return false;
@@ -48,12 +48,12 @@ bool pb_callback_inputs(pb_ostream_t *stream, const pb_field_t *field, void * co
 
 int main()
 {
-    pb_message_t msg = pb_message_t_init_default;
+    pb_packet_t msg = pb_packet_t_init_default;
 
     msg.luminance = 100;
 
     msg.hw_revision = pb_revision_t_PB_REV1_2;
-    
+
     msg.has_voltage = true;
     msg.voltage.battery = 630;
     msg.voltage.external = 1230;
@@ -62,7 +62,7 @@ int main()
 
     pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer));
 
-    pb_encode(&stream, pb_message_t_fields, &msg);
+    pb_encode(&stream, pb_packet_t_fields, &msg);
 
     printf("Length: %d\n", (int)stream.bytes_written);
     for (int i = 0; i < stream.bytes_written; i++)
@@ -73,7 +73,7 @@ int main()
     printf("\n");
 }
 
-// ./nanopb/generator/nanopb_generator.py message.proto 
+// ./nanopb/generator/nanopb_generator.py message.proto
 
 // gcc main.c nanopb/pb_common.c nanopb/pb_encode.c message.pb.c  -I nanopb/
 

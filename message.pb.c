@@ -12,7 +12,7 @@ PB_BIND(pb_input_t, pb_input_t, AUTO)
 PB_BIND(pb_voltage_t, pb_voltage_t, AUTO)
 
 
-PB_BIND(pb_message_t, pb_message_t, AUTO)
+PB_BIND(pb_packet_t, pb_packet_t, AUTO)
 
 
 
