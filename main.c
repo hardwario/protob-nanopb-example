@@ -23,8 +23,9 @@ uint8_t buffer[200];
 
 bool pb_callback_string(pb_ostream_t *stream, const pb_field_t *field, void * const *arg)
 {
-    char str[] = "Hello";
-
+    char str[32];
+    int index = *((int*)arg[0]); // Get index from array of arguments
+    snprintf(str, sizeof(str), "Input_%d", index);
     return pb_encode_tag_for_field(stream, field) && pb_encode_string(stream, str, strlen(str));
 }
 
@@ -36,6 +37,7 @@ bool pb_callback_inputs(pb_ostream_t *stream, const pb_field_t *field, void * co
 
         msg_input.state = true;
         msg_input.name.funcs.encode = pb_callback_string;
+        msg_input.name.arg = &i; // Set index parameter to callback
 
          if(pb_encode_tag_for_field(stream, field) == false || pb_encode_submessage(stream, pb_input_t_fields, &msg_input) == false)
          {
@@ -50,8 +52,8 @@ int main()
 {
     pb_packet_t msg = pb_packet_t_init_default;
 
-    msg.luminance = 100;
-
+    msg.luminance = 300;
+/*
     msg.hw_revision = pb_revision_t_PB_REV1_2;
 
     msg.has_voltage = true;
@@ -59,7 +61,7 @@ int main()
     msg.voltage.external = 1230;
 
     msg.inputs.funcs.encode = pb_callback_inputs;
-
+*/
     pb_ostream_t stream = pb_ostream_from_buffer(buffer, sizeof(buffer));
 
     pb_encode(&stream, pb_packet_t_fields, &msg);

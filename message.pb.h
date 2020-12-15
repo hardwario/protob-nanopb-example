@@ -26,8 +26,8 @@ typedef struct _pb_input_t {
 } pb_input_t;
 
 typedef struct _pb_voltage_t {
-    int32_t battery;
-    int32_t external;
+    uint32_t battery;
+    uint32_t external;
 } pb_voltage_t;
 
 typedef struct _pb_packet_t {
@@ -75,8 +75,8 @@ X(a, CALLBACK, SINGULAR, STRING,   name,              2)
 #define pb_input_t_DEFAULT NULL
 
 #define pb_voltage_t_FIELDLIST(X, a) \
-X(a, STATIC,   SINGULAR, INT32,    battery,           1) \
-X(a, STATIC,   SINGULAR, INT32,    external,          2)
+X(a, STATIC,   SINGULAR, UINT32,   battery,           1) \
+X(a, STATIC,   SINGULAR, UINT32,   external,          2)
 #define pb_voltage_t_CALLBACK NULL
 #define pb_voltage_t_DEFAULT NULL
 
@@ -101,7 +101,7 @@ extern const pb_msgdesc_t pb_packet_t_msg;
 
 /* Maximum encoded size of messages (where known) */
 /* pb_input_t_size depends on runtime parameters */
-#define pb_voltage_t_size                        22
+#define pb_voltage_t_size                        12
 /* pb_packet_t_size depends on runtime parameters */
 
 #ifdef __cplusplus
